@@ -20,7 +20,6 @@ interface Event {
 }
 
 function Calendar() {
-  // src/data/events.ts
 
   const events: Event[] = [
     {
