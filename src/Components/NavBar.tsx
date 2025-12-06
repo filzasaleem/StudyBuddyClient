@@ -34,7 +34,7 @@ export function Navbar() {
 
           <div className="flex flex-row items-center gap-1">
             <FaRegCalendarAlt className="w-5 h-5" />
-            <Link to="/schedule">Schedule</Link>
+            <Link to="/calendar">Schedule</Link>
           </div>
         </div>
 

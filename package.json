@@ -13,6 +13,12 @@
     "@clerk/clerk-react": "^5.57.1",
     "@radix-ui/react-navigation-menu": "^1.2.14",
     "@radix-ui/react-slot": "^1.2.4",
+    "@schedule-x/calendar": "^3.5.0",
+    "@schedule-x/drag-and-drop": "^3.5.0",
+    "@schedule-x/event-modal": "^3.5.0",
+    "@schedule-x/events-service": "^3.5.0",
+    "@schedule-x/react": "^3.4.0",
+    "@schedule-x/theme-default": "^3.5.0",
     "@tailwindcss/vite": "^4.1.17",
     "@tanstack/router-devtools": "^1.139.12",
     "@tanstack/router-vite-plugin": "^1.139.12",
@@ -23,7 +29,8 @@
     "react-dom": "^19.2.0",
     "react-icons": "^5.5.0",
     "tailwind-merge": "^3.4.0",
-    "tailwindcss": "^4.1.17"
+    "tailwindcss": "^4.1.17",
+    "temporal-polyfill": "^0.3.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
