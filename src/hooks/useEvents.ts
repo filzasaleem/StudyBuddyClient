@@ -7,8 +7,7 @@ export interface Event {
   title: string;
   start: string;
   end: string;
-  description?: string;
-  name: string;
+  Subject: string;
 }
 
 // GET EVENTS

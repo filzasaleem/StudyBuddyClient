@@ -1,75 +1,102 @@
+import "@/components/styles/modal.css";
+import { X } from "lucide-react";
 import { useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useEvents } from "@/hooks/useEvents";
 
-export default function CreateEventModal({
-  open,
-  onClose,
-}: {
-  open: boolean;
+type PropType = {
+  isOpen: boolean;
   onClose: () => void;
-}) {
-//   const { createEvent } = useEvents();
+};
 
-  const [title, setTitle] = useState("");
-  const [start, setStart] = useState("");
-  const [end, setEnd] = useState("");
-  const [description, setDescription] = useState("");
+export default function CalendarEventModal({ isOpen, onClose }: PropType) {
+  const [subject, setSubject] = useState("");
+  const [date, setDate] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
 
-  const handleSubmit = () => {};
+  const generateTimes = () => {
+    const times: string[] = [];
+    for (let hour = 8; hour <= 22; hour++) {
+      times.push(`${String(hour).padStart(2, "0")}:00`);
+      times.push(`${String(hour).padStart(2, "0")}:30`);
+    }
+    return times;
+  };
+
+  const timeSlots = generateTimes();
+
+  if (!isOpen) return null;
 
   return (
-    <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Create New Event</DialogTitle>
-        </DialogHeader>
+    <div className="modal-backdrop">
+      <div className="modal-card">
 
-        <div className="space-y-4">
-          <div>
-            <Label>Title</Label>
-            <Input value={title} onChange={(e) => setTitle(e.target.value)} />
-          </div>
-
-          <div>
-            <Label>Description</Label>
-            <Input
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </div>
-
-          <div>
-            <Label>Start Time</Label>
-            <Input
-              type="datetime-local"
-              value={start}
-              onChange={(e) => setStart(e.target.value)}
-            />
-          </div>
-
-          <div>
-            <Label>End Time</Label>
-            <Input
-              type="datetime-local"
-              value={end}
-              onChange={(e) => setEnd(e.target.value)}
-            />
-          </div>
-
-          <Button onClick={handleSubmit} className="w-full">
-            Create Event
-          </Button>
+        {/* HEADER */}
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-lg font-semibold">New Availability</h2>
+          <button onClick={onClose}>
+            <X size={20} />
+          </button>
         </div>
-      </DialogContent>
-    </Dialog>
+
+        {/* SUBJECT */}
+        <label className="modal-label">Subject</label>
+        <input
+          className="modal-input"
+          placeholder="e.g. Physics, React"
+          value={subject}
+          onChange={(e) => setSubject(e.target.value)}
+        />
+
+        {/* DATE + TIME */}
+        <div className="grid grid-cols-2 gap-4 mt-4">
+          {/* DATE */}
+          <div>
+            <label className="modal-label">Date</label>
+            <input
+              type="date"
+              className="modal-input"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
+          </div>
+
+          {/* START TIME */}
+          <div>
+            <label className="modal-label">Start Time</label>
+            <select
+              className="modal-select"
+              value={startTime}
+              onChange={(e) => setStartTime(e.target.value)}
+            >
+              <option value="">Select time</option>
+              {timeSlots.map((t) => (
+                <option key={t}>{t}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* END TIME */}
+          <div>
+            <label className="modal-label">End Time</label>
+            <select
+              className="modal-select"
+              value={endTime}
+              onChange={(e) => setEndTime(e.target.value)}
+            >
+              <option value="">Select time</option>
+              {timeSlots.map((t) => (
+                <option key={t}>{t}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {/* SAVE BUTTON */}
+        <button className="modal-button mt-6" onClick={onClose}>
+          Save Slot
+        </button>
+
+      </div>
+    </div>
   );
 }
