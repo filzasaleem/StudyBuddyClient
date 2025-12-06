@@ -8,7 +8,7 @@ export interface Event {
   start: string;
   end: string;
   description?: string;
-  name:string
+  name: string;
 }
 
 // GET EVENTS
@@ -54,7 +54,11 @@ export function useEvents() {
   const queryClient = useQueryClient();
 
   // --- GET EVENTS ---
-  const { data: events = [], isLoading, isError } = useQuery({
+  const {
+    data: events = [],
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["events", userId],
     queryFn: async () => {
       const token = await getToken(); // ✅ FIX — awaited inside

@@ -1,8 +1,6 @@
-import { createFileRoute } from '@tanstack/react-router'
-import CalendarScheduler from '../Components/calendar/CalendarScheduler'
+import { createFileRoute } from "@tanstack/react-router";
+import CalendarScheduler from "../components/calendar/CalendarScheduler";
 
-export const Route = createFileRoute('/calendar')({
+export const Route = createFileRoute("/calendar")({
   component: CalendarScheduler,
-})
-
-
+});

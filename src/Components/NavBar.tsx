@@ -5,7 +5,7 @@ import {
   SignInButton,
   UserButton,
 } from "@clerk/clerk-react";
-import { Button } from "../Components/ui/button";
+import { Button } from "./ui/button";
 import { FaBook, FaPeopleGroup } from "react-icons/fa6";
 import { FaSearch, FaRegCalendarAlt } from "react-icons/fa";
 import NotificationIcon from "./NotificationIcon";
