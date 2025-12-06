@@ -30,15 +30,15 @@ export default function CalendarEventModal({ isOpen, onClose }: PropType) {
     <div className="modal-backdrop">
       <div className="modal-card">
 
-        {/* HEADER */}
-        <div className="flex justify-between items-center mb-4">
+    
+        <div className="modal-header">
           <h2 className="text-lg font-semibold">New Availability</h2>
-          <button onClick={onClose}>
+          <button className="btn btn-secondary btn-sm" onClick={onClose}>
             <X size={20} />
           </button>
         </div>
 
-        {/* SUBJECT */}
+
         <label className="modal-label">Subject</label>
         <input
           className="modal-input"
@@ -47,9 +47,7 @@ export default function CalendarEventModal({ isOpen, onClose }: PropType) {
           onChange={(e) => setSubject(e.target.value)}
         />
 
-        {/* DATE + TIME */}
         <div className="grid grid-cols-2 gap-4 mt-4">
-          {/* DATE */}
           <div>
             <label className="modal-label">Date</label>
             <input
@@ -60,7 +58,6 @@ export default function CalendarEventModal({ isOpen, onClose }: PropType) {
             />
           </div>
 
-          {/* START TIME */}
           <div>
             <label className="modal-label">Start Time</label>
             <select
@@ -75,7 +72,7 @@ export default function CalendarEventModal({ isOpen, onClose }: PropType) {
             </select>
           </div>
 
-          {/* END TIME */}
+
           <div>
             <label className="modal-label">End Time</label>
             <select
@@ -91,8 +88,8 @@ export default function CalendarEventModal({ isOpen, onClose }: PropType) {
           </div>
         </div>
 
-        {/* SAVE BUTTON */}
-        <button className="modal-button mt-6" onClick={onClose}>
+ 
+        <button className="btn btn-default btn-lg" onClick={onClose}>
           Save Slot
         </button>
 
