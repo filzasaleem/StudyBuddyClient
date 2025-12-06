@@ -15,13 +15,9 @@ function CalendarScheduler() {
     console.log("*********BUtton Value********",isOpen);
   }
   return (
-    <div className="">
+    <div className="calender">
       
-      <div className="">
-        <div>
-          <h2 className="">Schedule</h2>
-          <p className="">Manage your availability slots.</p>
-        </div>
+      <div className="addSlot"> 
         <button className="btn btn-default btn-sm" onClick={handleClick}>
           <FaPlus className="mr-2 h-4 w-4" /> Add Slot
         </button>

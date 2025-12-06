@@ -1,0 +1,90 @@
+/* ----------------------------------------- */
+/* NAVBAR BASE                               */
+/* ----------------------------------------- */
+
+.navbar {
+  width: 100%;
+  background: white;
+  border-bottom: 1px solid #f1f5f9;
+  padding: 12px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+/* LEFT - LOGO AREA */
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: #111827;
+}
+
+.nav-left svg {
+  font-size: 24px;
+  color: #0d9488; /* teal-600 */
+}
+
+/* ----------------------------------------- */
+/* CENTER MENU                               */
+/* ----------------------------------------- */
+
+.nav-center {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  padding: 8px 20px;
+  border-radius: 50px;
+}
+
+.nav-center-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #4b5563;
+  font-size: 0.95rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nav-center-item svg {
+  font-size: 16px;
+  color: #4b5563;
+}
+
+/* Highlighted (Schedule) */
+.nav-center-item.schedule {
+  color: #0d9488;
+  font-weight: 500;
+}
+
+.nav-center-item.schedule svg {
+  color: #0d9488;
+}
+
+/* ----------------------------------------- */
+/* RIGHT SIDE                                */
+/* ----------------------------------------- */
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.nav-right button {
+  background: none;
+  border: none;
+}
+
+/* Notification Icon fix */
+.nav-right .notification-wrapper {
+  display: flex;
+  align-items: center;
+}
