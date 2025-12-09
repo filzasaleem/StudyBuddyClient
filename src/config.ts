@@ -8,7 +8,7 @@
 // };
 
 // Detect environment
-const ENV = import.meta.env.MODE || "development";
+// const ENV = import.meta.env.MODE || "development";
 
 // Use the correct base URL
 // export const API_BASE = API_BASE_URLS[ENV];

@@ -72,9 +72,9 @@ export function useEvents() {
       const token = await getToken(); // ✅ must also get token here
       return addEvent({ event, token });
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries(["events", userId]);
-    },
+    // onSuccess: () => {
+    //   queryClient.invalidateQueries(["events", userId]);
+    // },
   });
 
   return {

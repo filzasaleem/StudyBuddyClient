@@ -1,14 +1,11 @@
 import { useCalendarApp, ScheduleXCalendar } from "@schedule-x/react";
 import {
   createViewDay,
-  createViewMonthAgenda,
   createViewMonthGrid,
   createViewWeek,
 } from "@schedule-x/calendar";
-import { createEventsServicePlugin } from "@schedule-x/events-service";
 import "temporal-polyfill/global";
 import "@schedule-x/theme-default/dist/index.css";
-import { useEffect, useState } from "react";
 import { createDragAndDropPlugin } from "@schedule-x/drag-and-drop";
 interface Event {
   id: string;
