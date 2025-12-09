@@ -50,7 +50,7 @@ const addEvent = async ({
 // ======================================
 export function useEvents() {
   const { getToken, userId } = useAuth();
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient(); ///uncomment it later...
 
   // --- GET EVENTS ---
   const {
