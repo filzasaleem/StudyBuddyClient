@@ -32,10 +32,10 @@ const getEvents = async (token: string | null): Promise<Event[]> => {
 
 // CREATE EVENT
 const addEvent = async ({
-  event,
+  eventNew,
   token,
 }: {
-  event: Event;
+  eventNew: EventNew;
   token: string | null;
 }): Promise<Event> => {
   const response = await fetch(APIENDPOINTS.EVENTS.CREATE, {
@@ -44,12 +44,13 @@ const addEvent = async ({
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(event),
+    body: JSON.stringify(eventNew),
   });
 
   if (!response.ok) throw new Error("Failed to create event");
   return (await response.json()) as Event;
 };
+
 
 export function useEvents() {
   const { getToken, userId } = useAuth();
@@ -71,14 +72,15 @@ export function useEvents() {
 
   // --- CREATE EVENT ---
   const createEvent = useMutation({
-    mutationFn: async (event: Event) => {
+    mutationFn: async (eventNew: EventNew) => {
       const token = await getToken();
-      return addEvent({ event, token });
+      return addEvent({ eventNew, token });
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["events", userId]);
     },
   });
+  
 
   return {
     events,

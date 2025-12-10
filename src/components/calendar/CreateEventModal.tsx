@@ -30,7 +30,7 @@ export default function CalendarEventModal({ isOpen, onClose }: PropType) {
 
   const timeSlots = generateTimes();
 
-  const handleCreate = () => {
+  const handleCreate = async () => {
     const newErrors: { [key: string]: string } = {};
 
     if (!subject.trim()) newErrors.subject = "Subject is required";
@@ -40,8 +40,8 @@ export default function CalendarEventModal({ isOpen, onClose }: PropType) {
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      setTimeout(() => setErrors({}), 3000); 
-      return; 
+      setTimeout(() => setErrors({}), 3000);
+      return;
     }
 
     const event: EventNew = {
@@ -52,9 +52,17 @@ export default function CalendarEventModal({ isOpen, onClose }: PropType) {
     };
 
     console.log("new create event is", event);
-
-    // You can call createEvent(event) here if you want to save it
-    onClose();
+    try {
+      await createEvent.mutateAsync(event);
+      setSubject("");
+      setDescription("");
+      setDate("");
+      setStartTime("");
+      setEndTime("");
+      onClose();
+    } catch (error) {
+      console.error("Failed to create event:", error);
+    }
   };
 
   if (!isOpen) return null;
@@ -70,9 +78,7 @@ export default function CalendarEventModal({ isOpen, onClose }: PropType) {
         </div>
 
         <label className="modal-label">Subject</label>
-        {errors.subject && (
-          <p className="error-text">{errors.subject}</p>
-        )}
+        {errors.subject && <p className="error-text">{errors.subject}</p>}
         <input
           className="modal-input"
           placeholder="e.g. Physics, React"
@@ -91,9 +97,7 @@ export default function CalendarEventModal({ isOpen, onClose }: PropType) {
         <div className="grid grid-cols-2 gap-4 mt-4">
           <div>
             <label className="modal-label">Date</label>
-            {errors.date && (
-              <p className="error-text">{errors.date}</p>
-            )}
+            {errors.date && <p className="error-text">{errors.date}</p>}
             <input
               type="date"
               className="modal-input"
@@ -121,9 +125,7 @@ export default function CalendarEventModal({ isOpen, onClose }: PropType) {
 
           <div>
             <label className="modal-label">End Time</label>
-            {errors.endTime && (
-              <p className="error-text">{errors.endTime}</p>
-            )}
+            {errors.endTime && <p className="error-text">{errors.endTime}</p>}
             <select
               className="modal-select"
               value={endTime}
