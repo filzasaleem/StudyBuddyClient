@@ -1,4 +1,4 @@
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import APIENDPOINTS from "../config";
 import { useAuth } from "@clerk/clerk-react";
 
@@ -7,8 +7,16 @@ export interface Event {
   title: string;
   start: string;
   end: string;
-  Subject: string;
+  description?: string;
 }
+export interface EventNew {
+  title: string;
+  start: string;
+  end: string;
+  description?: string;
+}
+
+
 
 // GET EVENTS
 const getEvents = async (token: string | null): Promise<Event[]> => {
@@ -45,12 +53,10 @@ const addEvent = async ({
   return (await response.json()) as Event;
 };
 
-// ======================================
-//              HOOK
-// ======================================
+
 export function useEvents() {
   const { getToken, userId } = useAuth();
-  // const queryClient = useQueryClient(); ///uncomment it later...
+   const queryClient = useQueryClient(); ///uncomment it later...
 
   // --- GET EVENTS ---
   const {
@@ -60,21 +66,21 @@ export function useEvents() {
   } = useQuery({
     queryKey: ["events", userId],
     queryFn: async () => {
-      const token = await getToken(); // ✅ FIX — awaited inside
+      const token = await getToken();
       return getEvents(token);
     },
-    enabled: !!userId, // only run if logged in
+    enabled: !!userId, 
   });
 
   // --- CREATE EVENT ---
   const createEvent = useMutation({
     mutationFn: async (event: Event) => {
-      const token = await getToken(); // ✅ must also get token here
+      const token = await getToken(); 
       return addEvent({ event, token });
     },
-    // onSuccess: () => {
-    //   queryClient.invalidateQueries(["events", userId]);
-    // },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["events", userId]);
+    },
   });
 
   return {

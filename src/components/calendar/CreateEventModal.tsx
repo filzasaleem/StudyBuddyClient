@@ -1,6 +1,7 @@
 import "@/components/styles/modal.css";
 import { X } from "lucide-react";
 import { useState } from "react";
+import { EventNew } from "@/hooks/useEvents";
 
 type PropType = {
   isOpen: boolean;
@@ -8,10 +9,11 @@ type PropType = {
 };
 
 export default function CalendarEventModal({ isOpen, onClose }: PropType) {
-  const [subject, setSubject] = useState("");
-  const [date, setDate] = useState("");
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
+  const [subject, setSubject] = useState<string>("");
+  const [date, setDate] = useState<string>("");
+  const [startTime, setStartTime] = useState<string>("");
+  const [endTime, setEndTime] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
 
   const generateTimes = () => {
     const times: string[] = [];
@@ -24,13 +26,24 @@ export default function CalendarEventModal({ isOpen, onClose }: PropType) {
 
   const timeSlots = generateTimes();
 
+  const handleCreate = () => {
+    const event: EventNew = {
+      title: subject,
+      start: new Date(`${date}T${startTime}:00Z`).toISOString(),
+      end: new Date(`${date}T${endTime}:00Z`).toISOString(),
+      description: description,
+    };
+
+    console.log("new create event is", event);
+
+    onClose();
+  };
+
   if (!isOpen) return null;
 
   return (
     <div className="modal-backdrop">
       <div className="modal-card">
-
-    
         <div className="modal-header">
           <h2 className="text-lg font-semibold">New Availability</h2>
           <button className="btn btn-secondary btn-sm" onClick={onClose}>
@@ -38,13 +51,19 @@ export default function CalendarEventModal({ isOpen, onClose }: PropType) {
           </button>
         </div>
 
-
         <label className="modal-label">Subject</label>
         <input
           className="modal-input"
           placeholder="e.g. Physics, React"
           value={subject}
           onChange={(e) => setSubject(e.target.value)}
+        />
+        <label className="modal-label">Description</label>
+        <input
+          className="modal-input"
+          placeholder="short Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
         />
 
         <div className="grid grid-cols-2 gap-4 mt-4">
@@ -72,7 +91,6 @@ export default function CalendarEventModal({ isOpen, onClose }: PropType) {
             </select>
           </div>
 
-
           <div>
             <label className="modal-label">End Time</label>
             <select
@@ -88,11 +106,9 @@ export default function CalendarEventModal({ isOpen, onClose }: PropType) {
           </div>
         </div>
 
- 
-        <button className="btn btn-default btn-lg" onClick={onClose}>
+        <button className="btn btn-default btn-lg" onClick={handleCreate}>
           Save Slot
         </button>
-
       </div>
     </div>
   );

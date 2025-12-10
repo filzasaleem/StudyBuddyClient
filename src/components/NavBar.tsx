@@ -21,7 +21,7 @@ export function Navbar() {
 
       {/* CENTER MENU */}
       <div className="nav-center">
-        <Link className="nav-center-item" to="/index">
+        <Link className="nav-center-item" to="/">
           <FaSearch />
           Find Buddy
         </Link>

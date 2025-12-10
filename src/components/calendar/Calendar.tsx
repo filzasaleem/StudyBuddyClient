@@ -7,14 +7,7 @@ import {
 import "temporal-polyfill/global";
 import "@schedule-x/theme-default/dist/index.css";
 import { createDragAndDropPlugin } from "@schedule-x/drag-and-drop";
-interface Event {
-  id: string;
-  title: string;
-  start: string; // ISO string
-  end: string; // ISO string
-  description: string;
-
-}
+import { Event } from "@/hooks/useEvents";
 
 function Calendar() {
 
