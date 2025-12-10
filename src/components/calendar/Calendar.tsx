@@ -7,70 +7,56 @@ import {
 import "temporal-polyfill/global";
 import "@schedule-x/theme-default/dist/index.css";
 import { createDragAndDropPlugin } from "@schedule-x/drag-and-drop";
+import { createEventModalPlugin } from "@schedule-x/event-modal";
+import { createEventsServicePlugin } from "@schedule-x/events-service";
+import { useEffect, useMemo, useRef } from "react";
 import { Event } from "@/hooks/useEvents";
 
-function Calendar() {
+function Calendar({ events }: { events: Event[] }) {
+  const eventsServiceRef = useRef<any>(null);
 
-  const events: Event[] = [
-    {
-      id: "1",
-      title: "Math Tutoring",
-      start: "2025-12-06T10:00:00Z",
-      end: "2025-12-06T11:00:00Z",
-      description: "Calculus session with Hiba",
-    },
-    {
-      id: "2",
-      title: "Physics Tutoring",
-      start: "2025-12-06T12:00:00Z",
-      end: "2025-12-06T13:00:00Z",
-      description: "Newton's laws revision",
-    },
-    {
-      id: "3",
-      title: "Chemistry Lab",
-      start: "2025-12-07T09:00:00Z",
-      end: "2025-12-07T10:30:00Z",
-      description: "Organic chemistry experiments",
-    },
-    {
-      id: "4",
-      title: "English Reading",
-      start: "2025-12-07T14:00:00Z",
-      end: "2025-12-07T15:00:00Z",
-      description: "Reading comprehension practice",
-    },
-    {
-      id: "5",
-      title: "History Discussion",
-      start: "2025-12-08T11:00:00Z",
-      end: "2025-12-08T12:00:00Z",
-      description: "World War II overview",
-    },
-  ];
+  const eventsServicePlugin = useMemo(() => {
+    return createEventsServicePlugin();
+  }, []);
 
-
-  const calendarEvents = events.map((ev) => ({
-    id: ev.id,
-    title: ev.title,
-    description: ev.description,
-   start: Temporal.ZonedDateTime.from(`${ev.start}[UTC]`),
-  end: Temporal.ZonedDateTime.from(`${ev.end}[UTC]`),
-  }));
+  
+  useEffect(() => {
+    eventsServiceRef.current = eventsServicePlugin;
+  }, [eventsServicePlugin]);
 
   const calendar = useCalendarApp({
-    views: [createViewWeek(), createViewMonthGrid(),createViewDay()],
-    events: calendarEvents,
-    plugins: [ createDragAndDropPlugin()],
+    views: [createViewWeek(), createViewMonthGrid(), createViewDay()],
+    events: [], 
+    plugins: [
+      createEventModalPlugin(),
+      createDragAndDropPlugin(),
+      eventsServicePlugin,
+    ],
   });
 
-  return (
-    <div>
-      <ScheduleXCalendar calendarApp={calendar} />
-    </div>
-  );
+
+  useEffect(() => {
+    const plugin = eventsServiceRef.current;
+    if (!plugin) return;
+
+  
+    plugin.getAll().forEach((ev: any) => plugin.remove(ev.id));
+
+
+    events.forEach((ev) => {
+      plugin.add({
+        id: ev.id,
+        title: ev.title,
+        description: ev.description,
+        start: Temporal.ZonedDateTime.from(`${ev.start}[UTC]`),
+        end: Temporal.ZonedDateTime.from(`${ev.end}[UTC]`),
+      });
+    });
+  }, [events]);
+
+  if (!calendar) return null;
+
+  return <ScheduleXCalendar calendarApp={calendar} />;
 }
 
 export default Calendar;
-
-// npm i @schedule-x/drag-and-drop @schedule-x/event-modal

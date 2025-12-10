@@ -1,17 +1,17 @@
+import { useEvents } from "@/hooks/useEvents";
 import Calendar from "./Calendar";
 import CreateEventModal from "./CreateEventModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa6";
 
 function CalendarScheduler() {
+  const { events } = useEvents();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = () => {
-    console.log("*********BUtton Clocked********");
-
     setIsOpen(true);
-    console.log("*********BUtton Value********", isOpen);
   };
+
   return (
     <div className="calender">
       <div className="addSlot">
@@ -21,7 +21,7 @@ function CalendarScheduler() {
       </div>
 
       <CreateEventModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
-      <Calendar />
+      <Calendar events = {events}/>
     </div>
   );
 }

@@ -21,7 +21,7 @@ export default function CalendarEventModal({ isOpen, onClose }: PropType) {
 
   const generateTimes = () => {
     const times: string[] = [];
-    for (let hour = 8; hour <= 22; hour++) {
+    for (let hour = 1; hour <= 24; hour++) {
       times.push(`${String(hour).padStart(2, "0")}:00`);
       times.push(`${String(hour).padStart(2, "0")}:30`);
     }

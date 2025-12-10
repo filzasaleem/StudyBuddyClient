@@ -17,7 +17,8 @@ export interface EventNew {
 }
 
 // GET EVENTS
-const getEvents = async (token: string | null): Promise<Event[]> => {
+export const getEvents = async (token: string | null): Promise<Event[]> => {
+
   const response = await fetch(APIENDPOINTS.EVENTS.GET, {
     method: "GET",
     headers: {
@@ -31,7 +32,7 @@ const getEvents = async (token: string | null): Promise<Event[]> => {
 };
 
 // CREATE EVENT
-const addEvent = async ({
+export const addEvent = async ({
   eventNew,
   token,
 }: {
@@ -54,7 +55,7 @@ const addEvent = async ({
 
 export function useEvents() {
   const { getToken, userId } = useAuth();
-  const queryClient = useQueryClient(); ///uncomment it later...
+  const queryClient = useQueryClient(); 
 
   // --- GET EVENTS ---
   const {
