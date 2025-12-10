@@ -1,7 +1,7 @@
 import "@/components/styles/modal.css";
 import { X } from "lucide-react";
 import { useState } from "react";
-import { EventNew } from "@/hooks/useEvents";
+import { EventNew, useEvents } from "@/hooks/useEvents";
 
 type PropType = {
   isOpen: boolean;
@@ -15,6 +15,10 @@ export default function CalendarEventModal({ isOpen, onClose }: PropType) {
   const [endTime, setEndTime] = useState<string>("");
   const [description, setDescription] = useState<string>("");
 
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+  const { createEvent } = useEvents();
+
   const generateTimes = () => {
     const times: string[] = [];
     for (let hour = 8; hour <= 22; hour++) {
@@ -27,6 +31,19 @@ export default function CalendarEventModal({ isOpen, onClose }: PropType) {
   const timeSlots = generateTimes();
 
   const handleCreate = () => {
+    const newErrors: { [key: string]: string } = {};
+
+    if (!subject.trim()) newErrors.subject = "Subject is required";
+    if (!date) newErrors.date = "Date is required";
+    if (!startTime) newErrors.startTime = "Start time is required";
+    if (!endTime) newErrors.endTime = "End time is required";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      setTimeout(() => setErrors({}), 3000); 
+      return; 
+    }
+
     const event: EventNew = {
       title: subject,
       start: new Date(`${date}T${startTime}:00Z`).toISOString(),
@@ -36,6 +53,7 @@ export default function CalendarEventModal({ isOpen, onClose }: PropType) {
 
     console.log("new create event is", event);
 
+    // You can call createEvent(event) here if you want to save it
     onClose();
   };
 
@@ -52,12 +70,16 @@ export default function CalendarEventModal({ isOpen, onClose }: PropType) {
         </div>
 
         <label className="modal-label">Subject</label>
+        {errors.subject && (
+          <p className="error-text">{errors.subject}</p>
+        )}
         <input
           className="modal-input"
           placeholder="e.g. Physics, React"
           value={subject}
           onChange={(e) => setSubject(e.target.value)}
         />
+
         <label className="modal-label">Description</label>
         <input
           className="modal-input"
@@ -69,6 +91,9 @@ export default function CalendarEventModal({ isOpen, onClose }: PropType) {
         <div className="grid grid-cols-2 gap-4 mt-4">
           <div>
             <label className="modal-label">Date</label>
+            {errors.date && (
+              <p className="error-text">{errors.date}</p>
+            )}
             <input
               type="date"
               className="modal-input"
@@ -79,6 +104,9 @@ export default function CalendarEventModal({ isOpen, onClose }: PropType) {
 
           <div>
             <label className="modal-label">Start Time</label>
+            {errors.startTime && (
+              <p className="error-text">{errors.startTime}</p>
+            )}
             <select
               className="modal-select"
               value={startTime}
@@ -93,6 +121,9 @@ export default function CalendarEventModal({ isOpen, onClose }: PropType) {
 
           <div>
             <label className="modal-label">End Time</label>
+            {errors.endTime && (
+              <p className="error-text">{errors.endTime}</p>
+            )}
             <select
               className="modal-select"
               value={endTime}
@@ -106,7 +137,7 @@ export default function CalendarEventModal({ isOpen, onClose }: PropType) {
           </div>
         </div>
 
-        <button className="btn btn-default btn-lg" onClick={handleCreate}>
+        <button className="btn btn-default btn-lg mt-4" onClick={handleCreate}>
           Save Slot
         </button>
       </div>

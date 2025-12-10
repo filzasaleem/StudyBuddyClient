@@ -83,3 +83,7 @@
 .modal-button:hover {
   background: #0f766e;
 }
+.error-text {
+  color: #ef4444; 
+  font-size: 0.875rem; 
+}

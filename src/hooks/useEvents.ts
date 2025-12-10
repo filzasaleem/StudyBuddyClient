@@ -16,8 +16,6 @@ export interface EventNew {
   description?: string;
 }
 
-
-
 // GET EVENTS
 const getEvents = async (token: string | null): Promise<Event[]> => {
   const response = await fetch(APIENDPOINTS.EVENTS.GET, {
@@ -53,10 +51,9 @@ const addEvent = async ({
   return (await response.json()) as Event;
 };
 
-
 export function useEvents() {
   const { getToken, userId } = useAuth();
-   const queryClient = useQueryClient(); ///uncomment it later...
+  const queryClient = useQueryClient(); ///uncomment it later...
 
   // --- GET EVENTS ---
   const {
@@ -69,13 +66,13 @@ export function useEvents() {
       const token = await getToken();
       return getEvents(token);
     },
-    enabled: !!userId, 
+    enabled: !!userId,
   });
 
   // --- CREATE EVENT ---
   const createEvent = useMutation({
     mutationFn: async (event: Event) => {
-      const token = await getToken(); 
+      const token = await getToken();
       return addEvent({ event, token });
     },
     onSuccess: () => {
