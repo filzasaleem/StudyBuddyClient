@@ -21,7 +21,7 @@ export function Navbar() {
 
       {/* CENTER MENU */}
       <div className="nav-center">
-        <Link className="nav-center-item" to="/">
+        <Link className="nav-center-item" to="/index">
           <FaSearch />
           Find Buddy
         </Link>
@@ -40,9 +40,9 @@ export function Navbar() {
       {/* RIGHT */}
       <div className="nav-right">
         <SignedOut>
-          <button>
+          {/* <button> */}
             <SignInButton mode="modal" />
-          </button>
+          {/* </button> */}
         </SignedOut>
 
         <SignedIn>
