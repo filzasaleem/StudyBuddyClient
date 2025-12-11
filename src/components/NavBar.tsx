@@ -19,7 +19,12 @@ export function Navbar() {
       {/* LEFT */}
       <div className="nav-left">
         <FaBook />
-        <Link to="/">StudyBuddy</Link>
+        <Link
+          className={`nav-center-item ${path === "/" ? "active" : ""}`}
+          to="/"
+        >
+          StudyBuddy
+        </Link>
       </div>
 
       {/* CENTER MENU */}

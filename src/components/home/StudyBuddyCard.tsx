@@ -1,5 +1,6 @@
 import React from "react";
 import { StudyBuddyT } from "@/hooks/useStudyBuddy";
+import { FaUserFriends } from "react-icons/fa";
 
 export default function StudyBuddyCard({ card }: { card: StudyBuddyT }) {
   return (
@@ -14,7 +15,7 @@ export default function StudyBuddyCard({ card }: { card: StudyBuddyT }) {
 
       <div className="studdybuddy-card-subject">{card.subject}</div>
      <div className="studdybuddy-card-description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Deserunt, quidem!</div>
-      <button className="btn btn-default ">Connect</button>
+      <button className="btn btn-default "><FaUserFriends/> <span>Connect</span></button>
     </div>
   );
 }
