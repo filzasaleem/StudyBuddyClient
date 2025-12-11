@@ -11,6 +11,9 @@ export const APIENDPOINTS = {
     GET: `${API_BASE}/user/me`,
     UPDATE: `${API_BASE}/user/me`,
   },
+  STDYBUDDY: {
+    GET:`${API_BASE}/studybuddy`,
+  }
 };
 
 export default APIENDPOINTS;

@@ -1,5 +1,5 @@
 import "@/components/styles/navbar.css";
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import {
   SignedIn,
   SignedOut,
@@ -11,6 +11,9 @@ import { FaSearch, FaRegCalendarAlt } from "react-icons/fa";
 import NotificationIcon from "./NotificationIcon";
 
 export function Navbar() {
+  const { location } = useRouterState();
+  const path = location.pathname;
+
   return (
     <nav className="navbar">
       {/* LEFT */}
@@ -21,17 +24,26 @@ export function Navbar() {
 
       {/* CENTER MENU */}
       <div className="nav-center">
-        <Link className="nav-center-item" to="/">
+        <Link
+          className={`nav-center-item ${path === "/" ? "active" : ""}`}
+          to="/"
+        >
           <FaSearch />
           Find Buddy
         </Link>
 
-        <Link className="nav-center-item" to="/mybuddies">
+        <Link
+          className={`nav-center-item ${path === "/mybuddies" ? "active" : ""}`}
+          to="/mybuddies"
+        >
           <FaPeopleGroup />
           My Buddies
         </Link>
 
-        <Link className="nav-center-item schedule" to="/calendar">
+        <Link
+          className={`nav-center-item ${path === "/calendar" ? "active" : ""}`}
+          to="/calendar"
+        >
           <FaRegCalendarAlt />
           Schedule
         </Link>
@@ -40,9 +52,7 @@ export function Navbar() {
       {/* RIGHT */}
       <div className="nav-right">
         <SignedOut>
-          {/* <button> */}
-            <SignInButton mode="modal" />
-          {/* </button> */}
+          <SignInButton mode="modal" />
         </SignedOut>
 
         <SignedIn>
