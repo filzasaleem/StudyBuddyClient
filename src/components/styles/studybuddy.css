@@ -51,13 +51,33 @@
 /* ---------------------------------------------------- */
 /* NAME + STATUS                                        */
 /* ---------------------------------------------------- */
-
+.name-status{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
 .studdybuddy-card-name {
   font-size: 1.1rem;
   font-weight: 600;
   color: #111827; /* gray-900 */
   margin: 0;
 }
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+
+.status-dot[data-online="true"] {
+  background: #065f46;  /* green */
+}
+
+.status-dot[data-online="false"] {
+  background: #9ca3af; /* grey */
+}
+
 
 .studdybuddy-card-status {
   font-size: 0.85rem;
