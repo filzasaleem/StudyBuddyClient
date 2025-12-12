@@ -1,0 +1,217 @@
+/* -------------------------------------------------------- */
+/* 1. CONTAINER & BELL                                      */
+/* -------------------------------------------------------- */
+.notification-container {
+  position: relative;
+  display: inline-block;
+  font-family: inherit;
+}
+
+.bell-wrapper {
+  position: relative;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s ease;
+}
+
+.bell-wrapper:hover {
+  background-color: #f3f4f6; 
+}
+
+.bell-icon {
+  font-size: 20px;
+  color: #111827;
+}
+
+/* -------------------------------------------------------- */
+/* 2. THE RED DOT                                           */
+/* -------------------------------------------------------- */
+.badge {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  width: 9px;
+  height: 9px;
+  background-color: #ef4444; /* Alert Red */
+  border-radius: 50%;
+  border: 2px solid #fff;
+}
+
+.badge.pulse {
+  animation: pulse-animation 2s infinite;
+}
+
+@keyframes pulse-animation {
+  0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+  70% { box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+/* -------------------------------------------------------- */
+/* 3. DROPDOWN MENU                                         */
+/* -------------------------------------------------------- */
+.dropdown-menu {
+  position: absolute;
+  top: 55px;
+  right: -10px;
+  width: 320px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e5e7eb;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-menu::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  right: 24px;
+  width: 12px;
+  height: 12px;
+  background: white;
+  transform: rotate(45deg);
+  border-top: 1px solid #e5e7eb;
+  border-left: 1px solid #e5e7eb;
+}
+
+/* -------------------------------------------------------- */
+/* 4. HEADER                                                */
+/* -------------------------------------------------------- */
+.dropdown-header {
+  padding: 16px;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  border-radius: 8px 8px 0 0;
+}
+
+.dropdown-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.mark-read-btn {
+  background: none;
+  border: none;
+  color: #0d9488; /* Teal-600 */
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+}
+
+.mark-read-btn:hover {
+  text-decoration: underline;
+  color: #0f766e;
+}
+
+/* -------------------------------------------------------- */
+/* 5. NOTIFICATION ITEMS (Simplified Background)            */
+/* -------------------------------------------------------- */
+.dropdown-content {
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+.notification-item {
+  padding: 16px; /* increased padding slightly for room */
+  border-bottom: 1px solid #f3f4f6;
+  font-size: 14px;
+  color: #374151;
+  line-height: 1.5;
+  background-color: #fff; /* Explicitly White (Simple) */
+  transition: background-color 0.2s;
+}
+
+.notification-item:hover {
+  background-color: #f9fafb; /* Very subtle gray on hover */
+}
+
+/* UNREAD: Simple White background, just a teal border indicator */
+.notification-item.unread {
+  background-color: #fff; 
+  border-left: 3px solid #0d9488; /* The only pop of color */
+}
+
+.notification-item.unread .notif-text {
+  font-weight: 600;
+  color: #111827;
+}
+
+.empty-state {
+  padding: 40px 20px;
+  text-align: center;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* -------------------------------------------------------- */
+/* 6. BUTTON STYLES (From your Global CSS)                  */
+/* -------------------------------------------------------- */
+.notification-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+
+/* -------------------------------------------------------- */
+/* 6. ACTION BUTTONS (FIXED COLORS)                         */
+/* -------------------------------------------------------- */
+
+
+/* Base Button Style */
+.notification-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  
+  /* Force text to be white */
+  color: white !important; 
+}
+
+.notification-actions .btn-sm {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+}
+
+/* --- ACCEPT BUTTON (TEAL) --- */
+.notification-actions .btn-default {
+  /* Using !important to force the color over any white defaults */
+  background-color: #0d9488 !important; 
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.notification-actions .btn-default:hover {
+  background-color: #0f766e !important; /* Darker teal on hover */
+}
+
+/* --- REJECT BUTTON (NEUTRAL GRAY) --- */
+.notification-actions .btn-destructive {
+  background-color: #f3f4f6 !important; /* Light Gray */
+  color: #374151 !important;             /* Dark Gray Text */
+  border: 1px solid transparent;         /* Keeps sizing consistent */
+}
+
+.notification-actions .btn-destructive:hover {
+  background-color: #e5e7eb !important; /* Slightly darker gray on hover */
+  color: #111827 !important;            /* Blacker text on hover */
+}
+

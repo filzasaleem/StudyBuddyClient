@@ -1,14 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StudyBuddyT } from "@/hooks/useStudyBuddy";
 import { FaUserFriends } from "react-icons/fa";
 import { useUserSync } from "@/hooks/useUserSync";
 import { useConnections } from "@/hooks/useConnection";
 
+
 export default function StudyBuddyCard({ card }: { card: StudyBuddyT }) {
-  const { user, isLoading, error } = useUserSync();
-  const { sendRequestMutation } = useConnections();
+  const { user } = useUserSync();
+  const { pendingQuery, sendRequestMutation } = useConnections();
+
   const [status, setStatus] = useState<"none" | "pending" | "connected">("none");
   const [buttonClass, setButtonClass] = useState("btn btn-default");
+
+  // Update button status based on pending requests from server
+  useEffect(() => {
+    if (!pendingQuery.data || !user) return;
+
+    const pendingRequest = pendingQuery.data.find(
+      (req) => req.receiverId === card.userId
+    );
+
+    if (pendingRequest) {
+      setStatus("pending");
+      setButtonClass("btn btn-secondary");
+    }
+  }, [pendingQuery.data, card.userId, user]);
 
   const handleConnect = () => {
     if (!user) return;
@@ -17,7 +33,7 @@ export default function StudyBuddyCard({ card }: { card: StudyBuddyT }) {
 
     sendRequestMutation.mutate(
       { receiverId: card.userId, senderId: user.id },
-      { onSuccess: () => setStatus("pending") }
+      { onSuccess: () => setStatus("pending") } // Already handled by polling
     );
   };
 
