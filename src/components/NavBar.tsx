@@ -30,8 +30,8 @@ export function Navbar() {
       {/* CENTER MENU */}
       <div className="nav-center">
         <Link
-          className={`nav-center-item ${path === "/" ? "active" : ""}`}
-          to="/"
+          className={`nav-center-item ${path === "/search" ? "active" : ""}`}
+          to="/search"
         >
           <FaSearch />
           Find Buddy
