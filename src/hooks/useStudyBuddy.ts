@@ -1,4 +1,5 @@
 import APIENDPOINTS from "@/config";
+import { useAuth } from "@clerk/clerk-react";
 import { useQuery } from "@tanstack/react-query";
 
 export interface StudyBuddyT {
@@ -11,12 +12,19 @@ export interface StudyBuddyT {
 }
 
 const getStudyBuddyCards = async (
+  token: string | null,
   searchQuery: string = ""
 ): Promise<StudyBuddyT[]> => {
-  const url = `${APIENDPOINTS.STDYBUDDY.GET}?q=${encodeURIComponent(searchQuery)}`;
+  const url = searchQuery
+    ? `${APIENDPOINTS.STDYBUDDY.GET}?q=${encodeURIComponent(searchQuery)}`
+    : APIENDPOINTS.STDYBUDDY.GET;
+
   const response = await fetch(url, {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
   });
 
   if (!response.ok) throw new Error("Failed to fetch studybuddy cards");
@@ -25,9 +33,13 @@ const getStudyBuddyCards = async (
 };
 
 export function useStudybuddy(searchQuery: string = "") {
+  const { getToken } = useAuth();
   const { data, isLoading, isError } = useQuery({
     queryKey: ["studybuddyCards", searchQuery],
-    queryFn: () => getStudyBuddyCards(searchQuery),
+    queryFn: async () => {
+      const token = await getToken();
+      return getStudyBuddyCards(token, searchQuery);
+    },
   });
 
   return { data, isLoading, isError };
