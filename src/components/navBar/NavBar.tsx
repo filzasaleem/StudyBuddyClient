@@ -8,7 +8,7 @@ import {
 } from "@clerk/clerk-react";
 import { FaBook, FaPeopleGroup } from "react-icons/fa6";
 import { FaSearch, FaRegCalendarAlt } from "react-icons/fa";
-import NotificationIcon from "./NotificationIcon";
+import NotificationIcon from "../notification/NotificationIcon";
 
 export function Navbar() {
   const { location } = useRouterState();
