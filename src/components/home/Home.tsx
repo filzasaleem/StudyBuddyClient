@@ -6,6 +6,7 @@ import "@/components/styles/studybuddy.css";
 
 export default function Home({ searchQuery = "" }: { searchQuery?: string }) {
   const { data, isLoading, isError } = useStudybuddy(searchQuery);
+  
 
   if (isLoading) return <p className="loader">Loading...</p>;
   if (isError)

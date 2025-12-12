@@ -14,7 +14,14 @@ export const APIENDPOINTS = {
   },
   STDYBUDDY: {
     GET:`${API_BASE}/studybuddy`,
-  }
+  },
+  CONNECTION: {
+    SEND_REQUEST: `${API_BASE}/connections`,
+    SEND_RESPONSE: (id: string) => `${API_BASE}/connections/${id}/respond`,
+    GET_PENDING_REQUESTS: (currentUserId: string) => `${API_BASE}/connections/pending/${currentUserId}`,
+    NOTIFICATION:(currentUserId:string) =>  `${API_BASE}/connections/notifications/${currentUserId}`,
+  },
+  NOTIFICATIONHUB:`${API_BASE}/notificationHub`,
 };
 
 export default APIENDPOINTS;

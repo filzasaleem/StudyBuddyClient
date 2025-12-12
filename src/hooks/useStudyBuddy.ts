@@ -3,7 +3,7 @@ import { useAuth } from "@clerk/clerk-react";
 import { useQuery } from "@tanstack/react-query";
 
 export interface StudyBuddyT {
-  id: string;
+  userId: string;
   initials: string;
   fullName: string;
   isOnline: boolean;
@@ -40,6 +40,7 @@ export function useStudybuddy(searchQuery: string = "") {
       const token = await getToken();
       return getStudyBuddyCards(token, searchQuery);
     },
+    // refetchInterval: 5000,  how to get the lated data
   });
 
   return { data, isLoading, isError };
