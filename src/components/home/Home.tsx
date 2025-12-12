@@ -5,7 +5,6 @@ import "@/components/styles/studybuddy.css"
 
 export default function Home() {
   const { data, isLoading, isError } = useStudybuddy();
-
   if (isLoading) {
     return <p className="loader">Loading...</p>;
   }
@@ -20,8 +19,8 @@ export default function Home() {
 
   return (
     <div className="studybuddy-card-container">
-      {data?.map((card) => (
-        <StudyBuddyCard key={card.id} card={card} />
+      {data?.map((card,index) => (
+        <StudyBuddyCard key={index} card={card} />
       ))}
     </div>
   );

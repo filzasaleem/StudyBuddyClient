@@ -10,6 +10,7 @@ export const APIENDPOINTS = {
   USER: {
     GET: `${API_BASE}/user/me`,
     UPDATE: `${API_BASE}/user/me`,
+    PING: `${API_BASE}/user/ping`,
   },
   STDYBUDDY: {
     GET:`${API_BASE}/studybuddy`,

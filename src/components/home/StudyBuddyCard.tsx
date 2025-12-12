@@ -12,7 +12,7 @@ export default function StudyBuddyCard({ card }: { card: StudyBuddyT }) {
       </div>
 
       <div className="studdybuddy-card-subject">{card.subject}</div>
-     <div className="studdybuddy-card-description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Deserunt, quidem!</div>
+     <div className="studdybuddy-card-description">{card.description}</div>
       <button className="btn btn-default "><FaUserFriends/> <span>Connect</span></button>
     </div>
   );

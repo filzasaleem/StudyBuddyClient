@@ -36,7 +36,7 @@ export function UserSync() {
         lastName: user?.lastName || "",
         email: user?.primaryEmailAddress?.emailAddress || "",
       };
-       const updateRes = await fetch(APIENDPOINTS.USER.UPDATE, {
+      const updateRes = await fetch(APIENDPOINTS.USER.UPDATE, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -49,11 +49,28 @@ export function UserSync() {
         console.error("Failed to update user");
         return;
       }
-
     };
 
     syncUser();
   }, [isSignedIn, getToken]);
+
+
+  useEffect(() => {
+
+    const interval = setInterval(async () => {
+      const token = await getToken();
+      if (!token) return;
+
+      await fetch(APIENDPOINTS.USER.PING, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    }, 60000);
+    console.log("pingin every 1 minute");
+    return () => clearInterval(interval);
+  }, []);
 
   return null;
 }

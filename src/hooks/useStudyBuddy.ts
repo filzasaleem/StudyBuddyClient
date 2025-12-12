@@ -7,6 +7,7 @@ export interface StudyBuddyT {
   fullName: string;
   isOnline: boolean;
   subject: string;
+  description?:string
 }
 
 const getStudyBuddyCards = async (): Promise<StudyBuddyT[]> => {
