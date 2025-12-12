@@ -7,11 +7,14 @@ export interface StudyBuddyT {
   fullName: string;
   isOnline: boolean;
   subject: string;
-  description?:string
+  description?: string;
 }
 
-const getStudyBuddyCards = async (): Promise<StudyBuddyT[]> => {
-  const response = await fetch(APIENDPOINTS.STDYBUDDY.GET, {
+const getStudyBuddyCards = async (
+  searchQuery: string = ""
+): Promise<StudyBuddyT[]> => {
+  const url = `${APIENDPOINTS.STDYBUDDY.GET}?q=${encodeURIComponent(searchQuery)}`;
+  const response = await fetch(url, {
     method: "GET",
     headers: { "Content-Type": "application/json" },
   });
@@ -21,10 +24,10 @@ const getStudyBuddyCards = async (): Promise<StudyBuddyT[]> => {
   return (await response.json()) as StudyBuddyT[];
 };
 
-export function useStudybuddy() {
+export function useStudybuddy(searchQuery: string = "") {
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["studybuddyCards"],
-    queryFn: getStudyBuddyCards, 
+    queryKey: ["studybuddyCards", searchQuery],
+    queryFn: () => getStudyBuddyCards(searchQuery),
   });
 
   return { data, isLoading, isError };
