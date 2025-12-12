@@ -20,8 +20,9 @@ export const APIENDPOINTS = {
     SEND_RESPONSE: (id: string) => `${API_BASE}/connections/${id}/respond`,
     GET_PENDING_REQUESTS: (currentUserId: string) => `${API_BASE}/connections/pending/${currentUserId}`,
     NOTIFICATION:(currentUserId:string) =>  `${API_BASE}/connections/notifications/${currentUserId}`,
+    GET_ACCEPTED:""
   },
-  NOTIFICATIONHUB:`${API_BASE}/notificationHub`,
+ 
 };
 
 export default APIENDPOINTS;

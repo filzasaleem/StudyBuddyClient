@@ -1,21 +1,33 @@
 import { useState } from "react"; 
 import { FaBell } from "react-icons/fa";
-import { useConnections } from "@/hooks/useConnection";
 import "@/components/styles/notificationIcon.css";
+import { useConnections } from "@/hooks/useConnection";
 
 function NotificationIcon() {
   const [isOpen, setIsOpen] = useState(false);
-  const { notificationsQuery } = useConnections();
-  const notifications = notificationsQuery.data || [];
+  const { pendingQuery, respondMutation } = useConnections(); // use respondMutation
+  const notifications = pendingQuery.data || [];
 
-  const handleAccept = (id) => {
-    console.log("Accepted connection:", id);
-    // Add your API call here
+  const handleAccept = (id: string) => {
+    respondMutation.mutate(
+      { id, status: "Accepted" },
+      {
+        onSuccess: () => {
+          console.log("Accepted connection:", id);
+        },
+      }
+    );
   };
 
-  const handleReject = (id) => {
-    console.log("Rejected connection:", id);
-    // Add your API call here
+  const handleReject = (id: string) => {
+    respondMutation.mutate(
+      { id, status: "Rejected" },
+      {
+        onSuccess: () => {
+          console.log("Rejected connection:", id);
+        },
+      }
+    );
   };
 
   return (
@@ -27,42 +39,51 @@ function NotificationIcon() {
 
       {isOpen && (
         <div className="dropdown-menu">
-            <div className="dropdown-header">
-                <h3>Notifications</h3>
-                {notifications.length > 0 && (
-                  <button className="mark-read-btn">Mark all read</button>
-                )}
-            </div>
+          <div className="dropdown-header">
+            <h3>Notifications</h3>
+            {notifications.length > 0 && (
+              <button
+                className="mark-read-btn"
+                onClick={() =>
+                  notifications.forEach((notif) =>
+                    handleReject(notif.id) // Mark all read by rejecting all (or you can create a separate API)
+                  )
+                }
+              >
+                {/* Mark all read */}
+              </button>
+            )}
+          </div>
 
-            <div className="dropdown-content">
-                {notifications.length === 0 ? (
-                    <div className="empty-state">No new notifications</div>
-                ) : (
-                    notifications.map((notif, i) => (
-                        <div key={i} className="notification-item unread">
-                            <span className="notif-text">{notif.message}</span>
-                            
-                            <div className="notification-actions">
-                                {/* Accept Button: Teal (btn-default) */}
-                                <button 
-                                  className="btn btn-sm btn-default"
-                                  onClick={() => handleAccept(notif.id)}
-                                >
-                                  Accept
-                                </button>
-                                
-                                {/* Reject Button: Red (btn-destructive) */}
-                                <button 
-                                  className="btn btn-sm btn-destructive"
-                                  onClick={() => handleReject(notif.id)}
-                                >
-                                  Reject
-                                </button>
-                            </div>
-                        </div>
-                    ))
-                )}
-            </div>
+          <div className="dropdown-content">
+            {notifications.length === 0 ? (
+              <div className="empty-state">No new notifications</div>
+            ) : (
+              notifications.map((notif) => (
+                <div key={notif.id} className="notification-item unread">
+                  <span className="notif-text">
+                    {notif.senderName} sent you a connection request
+                  </span>
+
+                  <div className="notification-actions">
+                    <button
+                      className="btn btn-sm btn-default"
+                      onClick={() => handleAccept(notif.id)}
+                    >
+                      Accept
+                    </button>
+
+                    <button
+                      className="btn btn-sm btn-destructive"
+                      onClick={() => handleReject(notif.id)}
+                    >
+                      Reject
+                    </button>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
         </div>
       )}
     </div>

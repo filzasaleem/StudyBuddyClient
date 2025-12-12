@@ -33,7 +33,7 @@ export default function StudyBuddyCard({ card }: { card: StudyBuddyT }) {
 
     sendRequestMutation.mutate(
       { receiverId: card.userId, senderId: user.id },
-      { onSuccess: () => setStatus("pending") } // Already handled by polling
+      { onSuccess: () => setStatus("pending") } 
     );
   };
 

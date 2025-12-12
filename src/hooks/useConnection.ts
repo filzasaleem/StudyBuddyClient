@@ -1,4 +1,3 @@
-// src/hooks/useConnections.ts
 import APIENDPOINTS from "@/config";
 import { useAuth } from "@clerk/clerk-react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -12,12 +11,8 @@ export interface Connection {
 }
 
 interface ConnectionRequestDto {
-  senderId: string | undefined;
-  receiverId: string | undefined;
-}
-
-interface ConnectionResponseDto {
-  status: "Accepted" | "Rejected";
+  senderId: string;
+  receiverId: string;
 }
 
 export function useConnections() {
@@ -26,59 +21,53 @@ export function useConnections() {
   const queryClient = useQueryClient();
   const { getToken } = useAuth();
 
-  // ---------------------
-  // Fetch pending connection requests (polling)
-  // ---------------------
+  // --------------------------
+  // PENDING REQUESTS (Polling)
+  // --------------------------
   const pendingQuery = useQuery<Connection[]>({
     queryKey: ["connections", "pending", currentUserId],
+    enabled: !!currentUserId, // ⛔ BLOCK until user exists
     queryFn: async () => {
       const token = await getToken();
-      const res = await fetch(
-        APIENDPOINTS.CONNECTION.GET_PENDING_REQUESTS(currentUserId),
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const url = APIENDPOINTS.CONNECTION.GET_PENDING_REQUESTS(currentUserId!);
+      const res = await fetch(url, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (!res.ok) throw new Error("Failed to fetch pending requests");
       return res.json();
     },
-    refetchInterval: 5000, // Poll every 5 seconds
-    staleTime: 0, // always refetch on interval
+    refetchInterval: 5000,
   });
 
-  // ---------------------
-  // Fetch notifications (polling)
-  // ---------------------
+  // --------------------------
+  // NOTIFICATIONS (Polling)
+  // --------------------------
   const notificationsQuery = useQuery<
-    { message: string; connectionId: string }[]
+    { id: string; message: string; connectionId: string }[]
   >({
     queryKey: ["notifications", currentUserId],
+    enabled: !!currentUserId, // ⛔ BLOCK until user exists
     queryFn: async () => {
       const token = await getToken();
-      const res = await fetch(
-        APIENDPOINTS.CONNECTION.NOTIFICATION(currentUserId),
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const url = APIENDPOINTS.CONNECTION.NOTIFICATION(currentUserId!);
+      const res = await fetch(url, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (!res.ok) throw new Error("Failed to fetch notifications");
       return res.json();
     },
-    refetchInterval: 5000, // Poll every 5 seconds
-    staleTime: 0,
+    refetchInterval: 5000,
   });
 
-  // ---------------------
-  // Send connection request
-  // ---------------------
+  // --------------------------
+  // SEND REQUEST
+  // --------------------------
   const sendRequestMutation = useMutation({
     mutationFn: async (data: ConnectionRequestDto) => {
       const token = await getToken();
@@ -90,19 +79,19 @@ export function useConnections() {
         },
         body: JSON.stringify(data),
       });
+
       if (!res.ok) throw new Error("Failed to send request");
       return res.json();
     },
     onSuccess: () => {
-      // Refetch pending requests and notifications after sending request
       queryClient.invalidateQueries(["connections", "pending", currentUserId]);
       queryClient.invalidateQueries(["notifications", currentUserId]);
     },
   });
 
-  // ---------------------
-  // Respond to connection request
-  // ---------------------
+  // --------------------------
+  // ACCEPT / REJECT
+  // --------------------------
   const respondMutation = useMutation({
     mutationFn: async ({
       id,
@@ -120,20 +109,42 @@ export function useConnections() {
         },
         body: JSON.stringify({ status }),
       });
+
       if (!res.ok) throw new Error("Failed to respond");
       return res.json();
     },
     onSuccess: () => {
-      // Refetch pending requests and notifications after responding
-      queryClient.invalidateQueries(["connections", "pending", currentUserId]);
-      queryClient.invalidateQueries(["notifications", currentUserId]);
+      // Remove item from Notification immediately
+      notificationsQuery.refetch();
+      pendingQuery.refetch();
     },
   });
+
+
+  const acceptedQuery = useQuery<Connection[]>({
+  queryKey: ["connections", "accepted", currentUserId],
+  queryFn: async () => {
+    const token = await getToken();
+    const res = await fetch(APIENDPOINTS.CONNECTION.GET_ACCEPTED(currentUserId), {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!res.ok) throw new Error("Failed to fetch accepted connections");
+    return res.json();
+  },
+  enabled: !!currentUserId,
+  refetchInterval: 5000,
+});
+
 
   return {
     pendingQuery,
     notificationsQuery,
     sendRequestMutation,
     respondMutation,
+    acceptedQuery
   };
 }
