@@ -5,9 +5,10 @@ import { useConnections } from "@/hooks/useConnection";
 
 function NotificationIcon() {
   const [isOpen, setIsOpen] = useState(false);
-  const { pendingQuery, respondMutation } = useConnections(); // use respondMutation
-  const notifications = pendingQuery.data || [];
+  const { respondMutation ,notificationsQuery} = useConnections(); // use respondMutation
+  const notifications = notificationsQuery.data || [];
 
+console.log("------notifications----",notifications);
   const handleAccept = (id: string) => {
     respondMutation.mutate(
       { id, status: "Accepted" },
@@ -62,7 +63,7 @@ function NotificationIcon() {
               notifications.map((notif) => (
                 <div key={notif.id} className="notification-item unread">
                   <span className="notif-text">
-                    {notif.senderName} sent you a connection request
+                    {notif.senderFirstName} {notif.senderLastName} sent you a connection request
                   </span>
 
                   <div className="notification-actions">
