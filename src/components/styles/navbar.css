@@ -1,7 +1,6 @@
 /* ----------------------------------------- */
-/* NAVBAR BASE                               */
+/* 1. NAVBAR BASE                            */
 /* ----------------------------------------- */
-
 .navbar {
   width: 100%;
   background: white;
@@ -11,6 +10,8 @@
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
+  position: relative; /* Context for mobile menu */
+  z-index: 50;
 }
 
 /* LEFT - LOGO AREA */
@@ -29,22 +30,12 @@
 }
 
 /* ----------------------------------------- */
-/* CENTER MENU                               */
+/* 2. CENTER MENU (DESKTOP)                  */
 /* ----------------------------------------- */
-.nav-center-item.active {
-  color: #0d9488 !important;   /* teal-600 */
-  font-weight: 600;
-}
-
-.nav-center-item.active svg {
-  color: #0d9488 !important;
-}
-
 .nav-center {
   display: flex;
   align-items: center;
   gap: 20px;
-
   background: #f9fafb;
   border: 1px solid #e5e7eb;
   padding: 8px 20px;
@@ -59,6 +50,7 @@
   font-size: 0.95rem;
   text-decoration: none;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .nav-center-item svg {
@@ -66,21 +58,29 @@
   color: #4b5563;
 }
 
-/* Highlighted (Schedule) */
+/* Active / Highlighted States */
+.nav-center-item.active,
 .nav-center-item.schedule {
-  color: #0d9488;
-  font-weight: 500;
+  color: #0d9488 !important;
+  font-weight: 600;
 }
 
+.nav-center-item.active svg,
 .nav-center-item.schedule svg {
-  color: #0d9488;
+  color: #0d9488 !important;
 }
 
 /* ----------------------------------------- */
-/* RIGHT SIDE                                */
+/* 3. RIGHT SIDE                             */
 /* ----------------------------------------- */
-
 .nav-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+/* This wraps Notification + Profile (We hide this div on mobile) */
+.nav-actions-desktop {
   display: flex;
   align-items: center;
   gap: 18px;
@@ -91,8 +91,119 @@
   border: none;
 }
 
-/* Notification Icon fix */
-.nav-right .notification-wrapper {
+.notification-wrapper {
   display: flex;
   align-items: center;
+}
+
+/* ----------------------------------------- */
+/* 4. MOBILE MENU (BASE STYLES)              */
+/* ----------------------------------------- */
+
+/* Hamburger Button - Hidden by default on Desktop */
+.hamburger-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #374151;
+  cursor: pointer;
+  padding: 4px;
+  margin-left: 10px;
+}
+
+/* Mobile Dropdown - Hidden by default */
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 10px 0;
+  width: 70%;
+  position: absolute;
+  top: 60px; /* Adjust if navbar height changes */
+  right: 0;
+  z-index: 40;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-menu.open {
+  display: flex;
+}
+
+/* Mobile Links */
+.mobile-link {
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: #374151;
+  font-weight: 500;
+  font-size: 1rem;
+  border-left: 4px solid transparent;
+}
+
+.mobile-link svg {
+  color: #6b7280;
+}
+
+.mobile-link.active {
+  background-color: #f0fdfa; /* Light Teal */
+  color: #0d9488;
+  border-left-color: #0d9488;
+}
+
+.mobile-link.active svg {
+  color: #0d9488;
+}
+
+/* Mobile Menu Footer (Profile/Notifs area) */
+.mobile-menu-footer {
+    border-top: 1px solid #e5e7eb;
+    margin-top: 10px;
+    padding: 20px 28px;
+    background-color: #f9fafb; 
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.mobile-footer-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1rem;
+    color: #374151;
+    font-weight: 500;
+}
+
+.mobile-footer-label {
+    font-size: 0.95rem;
+    color: #6b7280;
+}
+
+/* ----------------------------------------- */
+/* 5. MEDIA QUERIES (RESPONSIVENESS)         */
+/* ----------------------------------------- */
+
+@media (max-width: 768px) {
+  
+  .navbar {
+    padding: 12px 20px; /* Smaller padding on mobile */
+  }
+
+  /* 1. HIDE Desktop Elements */
+  .nav-center {
+    display: none; /* <--- THIS WAS MISSING BEFORE! */
+  }
+
+  .nav-actions-desktop {
+    display: none;
+  }
+
+  /* 2. SHOW Mobile Elements */
+  .hamburger-btn {
+    display: block;
+  }
 }
