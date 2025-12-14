@@ -1,0 +1,157 @@
+/* ---------------------------------------------------- */
+/* LANDING PAGE CONTAINER                               */
+/* ---------------------------------------------------- */
+.landing-page {
+  font-family: inherit;
+  color: #1f2937;
+  overflow-x: hidden;
+}
+
+/* ---------------------------------------------------- */
+/* HERO SECTION                                         */
+/* ---------------------------------------------------- */
+.hero-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 20px;
+  background: linear-gradient(180deg, #f0fdfa 0%, #ffffff 100%); /* Light Teal Fade */
+  min-height: 500px;
+}
+
+.hero-badge {
+  background-color: #ccfbf1; /* Teal-100 */
+  color: #0f766e;            /* Teal-700 */
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  display: inline-block;
+}
+
+.hero-title {
+  font-size: 48px;
+  font-weight: 800;
+  color: #111827;
+  line-height: 1.1;
+  max-width: 700px;
+  margin-bottom: 24px;
+}
+
+.hero-title span {
+  color: #0d9488; /* Your Brand Teal */
+}
+
+.hero-subtitle {
+  font-size: 18px;
+  color: #6b7280;
+  max-width: 500px;
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+/* CTA BUTTONS */
+.hero-actions {
+  display: flex;
+  gap: 16px;
+}
+
+.btn-hero {
+  padding: 14px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background-color: #0d9488;
+  color: white;
+  box-shadow: 0 4px 6px -1px rgba(13, 148, 136, 0.4);
+}
+
+.btn-primary:hover {
+  background-color: #0f766e;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background-color: white;
+  color: #374151;
+  border: 1px solid #e5e7eb;
+}
+
+.btn-secondary:hover {
+  background-color: #f9fafb;
+}
+
+/* ---------------------------------------------------- */
+/* FEATURES GRID                                        */
+/* ---------------------------------------------------- */
+.features-section {
+  padding: 60px 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.feature-card {
+  padding: 30px;
+  border: 1px solid #f3f4f6;
+  border-radius: 16px;
+  background: white;
+  transition: all 0.2s ease;
+}
+
+.feature-card:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+  border-color: #e5e7eb;
+}
+
+.feature-icon {
+  width: 48px;
+  height: 48px;
+  background-color: #f0fdfa; /* Teal-50 */
+  color: #0d9488;            /* Teal-600 */
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.feature-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #111827;
+}
+
+.feature-desc {
+  font-size: 15px;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+/* ---------------------------------------------------- */
+/* RESPONSIVE                                           */
+/* ---------------------------------------------------- */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 36px;
+  }
+  .hero-subtitle {
+    font-size: 16px;
+  }
+}

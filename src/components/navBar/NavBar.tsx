@@ -25,7 +25,7 @@ export function Navbar() {
         {/* LEFT */}
         <div className="nav-left">
           <FaBook />
-          <Link className={`nav-center-item ${path === "/" ? "active" : ""}`} to="/">
+          <Link className={`nav-center-item ${path === "/home" ? "active" : ""}`} to="/home">
             StudyBuddy
           </Link>
         </div>
@@ -48,9 +48,6 @@ export function Navbar() {
           
           {/* 1. WRAP ICONS IN A DESKTOP-ONLY DIV */}
           <div className="nav-actions-desktop">
-            <SignedOut>
-              <SignInButton mode="modal" />
-            </SignedOut>
             <SignedIn>
               <div className="notification-wrapper">
                 <NotificationIcon />

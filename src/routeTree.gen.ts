@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as MybuddiesRouteImport } from './routes/mybuddies'
+import { Route as HomeRouteImport } from './routes/home'
 import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -22,6 +23,11 @@ const SearchRoute = SearchRouteImport.update({
 const MybuddiesRoute = MybuddiesRouteImport.update({
   id: '/mybuddies',
   path: '/mybuddies',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HomeRoute = HomeRouteImport.update({
+  id: '/home',
+  path: '/home',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CalendarRoute = CalendarRouteImport.update({
@@ -38,12 +44,14 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/calendar': typeof CalendarRoute
+  '/home': typeof HomeRoute
   '/mybuddies': typeof MybuddiesRoute
   '/search': typeof SearchRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/calendar': typeof CalendarRoute
+  '/home': typeof HomeRoute
   '/mybuddies': typeof MybuddiesRoute
   '/search': typeof SearchRoute
 }
@@ -51,20 +59,22 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/calendar': typeof CalendarRoute
+  '/home': typeof HomeRoute
   '/mybuddies': typeof MybuddiesRoute
   '/search': typeof SearchRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/calendar' | '/mybuddies' | '/search'
+  fullPaths: '/' | '/calendar' | '/home' | '/mybuddies' | '/search'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/calendar' | '/mybuddies' | '/search'
-  id: '__root__' | '/' | '/calendar' | '/mybuddies' | '/search'
+  to: '/' | '/calendar' | '/home' | '/mybuddies' | '/search'
+  id: '__root__' | '/' | '/calendar' | '/home' | '/mybuddies' | '/search'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CalendarRoute: typeof CalendarRoute
+  HomeRoute: typeof HomeRoute
   MybuddiesRoute: typeof MybuddiesRoute
   SearchRoute: typeof SearchRoute
 }
@@ -83,6 +93,13 @@ declare module '@tanstack/react-router' {
       path: '/mybuddies'
       fullPath: '/mybuddies'
       preLoaderRoute: typeof MybuddiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/home': {
+      id: '/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof HomeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/calendar': {
@@ -105,6 +122,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CalendarRoute: CalendarRoute,
+  HomeRoute: HomeRoute,
   MybuddiesRoute: MybuddiesRoute,
   SearchRoute: SearchRoute,
 }
