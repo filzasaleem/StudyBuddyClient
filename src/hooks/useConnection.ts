@@ -14,6 +14,12 @@ interface ConnectionRequestDto {
   senderId: string;
   receiverId: string;
 }
+interface BuddyDto {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+}
 
 export function useConnections() {
   const { user } = useUserSync();
@@ -40,6 +46,24 @@ export function useConnections() {
       return res.json();
     },
     refetchInterval: 5000,
+  });
+
+  // --------------------------
+  // Buddies
+  // --------------------------
+  const buddiesQuery = useQuery<BuddyDto[]>({
+    queryKey: ["buddies"],
+    queryFn: async () => {
+      const token = await getToken();
+      const res = await fetch(APIENDPOINTS.CONNECTION.BUDDIES(currentUserId!), {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!res.ok) throw new Error("Failed to fetch buddies");
+      return res.json();
+    },
+    enabled: !!currentUserId,
   });
 
   // --------------------------
@@ -120,31 +144,11 @@ export function useConnections() {
     },
   });
 
-
-  const acceptedQuery = useQuery<Connection[]>({
-  queryKey: ["connections", "accepted", currentUserId],
-  queryFn: async () => {
-    const token = await getToken();
-    const res = await fetch(APIENDPOINTS.CONNECTION.GET_ACCEPTED(currentUserId), {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    if (!res.ok) throw new Error("Failed to fetch accepted connections");
-    return res.json();
-  },
-  enabled: !!currentUserId,
-  refetchInterval: 5000,
-});
-
-
   return {
     pendingQuery,
     notificationsQuery,
     sendRequestMutation,
     respondMutation,
-    acceptedQuery
+    buddiesQuery,
   };
 }

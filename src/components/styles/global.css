@@ -109,3 +109,15 @@ button {
   font-size: 1rem;
 }
 
+.btn-outline-teal {
+  background-color: #f0fdfa;
+  border: 1px solid #0d9488; /* teal-600 */
+  color: #0d9488;
+  box-shadow: none;
+}
+
+.btn-outline-teal:hover {
+  background-color: #92dbca; /* teal-50 (very light tint) */
+  color: #0f766e;            /* teal-700 (darker text) */
+  border-color: #0f766e;
+}
