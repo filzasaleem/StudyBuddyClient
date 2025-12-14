@@ -1,0 +1,203 @@
+/* --- PAGE LAYOUT --- */
+.buddies-page {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.buddies-page h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 24px;
+}
+
+/* --- GRID LAYOUT --- */
+.buddies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(450px, 1fr)); /* Wide cards */
+  gap: 24px;
+}
+
+/* --- CARD CONTAINER --- */
+.buddy-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  display: flex; /* Flex row to split Left/Right */
+  overflow: hidden; /* Ensures child elements respect radius */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  transition: box-shadow 0.2s;
+}
+
+.buddy-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* --- LEFT SIDE (Info) --- */
+.buddy-content-left {
+  flex: 1; /* Takes up remaining space */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Header Section */
+.buddy-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.buddy-avatar-circle {
+  width: 48px;
+  height: 48px;
+  background-color: #f3f4f6; /* Light Gray */
+  color: #1f2937;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.buddy-header-text h4 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.connection-date {
+  font-size: 13px;
+  color: #6b7280; /* Gray text */
+}
+
+/* Subtitle (Location) */
+.buddy-subtitle {
+  font-size: 14px;
+  color: #4b5563;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.location-pin {
+  color: #9ca3af;
+}
+
+/* Contact Section */
+.buddy-contact-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: auto; /* Pushes to bottom of left container if height varies */
+}
+
+.contact-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+/* Discord Specifics */
+.contact-box.discord {
+  background-color: #eef2ff; /* Light Indigo background */
+  color: #4f46e5;
+}
+
+.icon-discord {
+  font-size: 16px;
+  margin-right: 8px;
+}
+
+/* Email Specifics */
+.contact-box.email {
+  background-color: #f9fafb; /* Light Gray background */
+  color: #374151;
+  border: 1px solid #f3f4f6;
+}
+
+.label-text {
+  font-weight: 700;
+  font-size: 11px;
+  color: #9ca3af;
+  margin-right: 8px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.contact-value {
+  font-family: monospace; /* Optional: makes IDs look techy */
+  font-weight: 500;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.6;
+  padding: 4px;
+  transition: opacity 0.2s;
+  display: flex;
+  align-items: center;
+}
+
+.icon-btn:hover {
+  opacity: 1;
+}
+
+/* --- RIGHT SIDE (Buttons) --- */
+.buddy-actions-right {
+  width: 100px; /* Fixed width sidebar */
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid #e5e7eb;
+}
+
+.action-btn {
+  flex: 1; /* Each button takes 50% height */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  gap: 6px;
+  transition: background 0.2s;
+}
+
+.action-icon {
+  font-size: 16px;
+  margin-bottom: 2px;
+}
+
+/* Remove Button (Top) */
+.remove-btn {
+  background-color: white;
+  color: #4b5563;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.remove-btn:hover {
+  background-color: #fef2f2; /* Light Red tint */
+  color: #ef4444;
+}
+
+/* Schedule Button (Bottom) */
+.schedule-btn {
+  background-color: #0d9488; /* Your Teal Brand Color */
+  color: white;
+}
+
+.schedule-btn:hover {
+  background-color: #0f766e; /* Darker Teal */
+}

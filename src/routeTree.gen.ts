@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SearchRouteImport } from './routes/search'
+import { Route as MybuddiesRouteImport } from './routes/mybuddies'
 import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as IndexRouteImport } from './routes/index'
 
 const SearchRoute = SearchRouteImport.update({
   id: '/search',
   path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MybuddiesRoute = MybuddiesRouteImport.update({
+  id: '/mybuddies',
+  path: '/mybuddies',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CalendarRoute = CalendarRouteImport.update({
@@ -32,30 +38,34 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/calendar': typeof CalendarRoute
+  '/mybuddies': typeof MybuddiesRoute
   '/search': typeof SearchRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/calendar': typeof CalendarRoute
+  '/mybuddies': typeof MybuddiesRoute
   '/search': typeof SearchRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/calendar': typeof CalendarRoute
+  '/mybuddies': typeof MybuddiesRoute
   '/search': typeof SearchRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/calendar' | '/search'
+  fullPaths: '/' | '/calendar' | '/mybuddies' | '/search'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/calendar' | '/search'
-  id: '__root__' | '/' | '/calendar' | '/search'
+  to: '/' | '/calendar' | '/mybuddies' | '/search'
+  id: '__root__' | '/' | '/calendar' | '/mybuddies' | '/search'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CalendarRoute: typeof CalendarRoute
+  MybuddiesRoute: typeof MybuddiesRoute
   SearchRoute: typeof SearchRoute
 }
 
@@ -66,6 +76,13 @@ declare module '@tanstack/react-router' {
       path: '/search'
       fullPath: '/search'
       preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mybuddies': {
+      id: '/mybuddies'
+      path: '/mybuddies'
+      fullPath: '/mybuddies'
+      preLoaderRoute: typeof MybuddiesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/calendar': {
@@ -88,6 +105,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CalendarRoute: CalendarRoute,
+  MybuddiesRoute: MybuddiesRoute,
   SearchRoute: SearchRoute,
 }
 export const routeTree = rootRouteImport

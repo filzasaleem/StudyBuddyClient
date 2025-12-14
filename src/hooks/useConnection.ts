@@ -14,12 +14,13 @@ interface ConnectionRequestDto {
   senderId: string;
   receiverId: string;
 }
-interface BuddyDto {
+export interface Buddy {
   id: string;
   firstName: string;
   lastName: string;
   email: string;
 }
+
 
 export function useConnections() {
   const { user } = useUserSync();
