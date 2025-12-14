@@ -36,7 +36,6 @@ export default function StudyBuddyCard({ card }: { card: StudyBuddyT }) {
       return;
     }
 
-    // 3️⃣ Default
     setStatus("none");
     setButtonClass("btn btn-default");
 

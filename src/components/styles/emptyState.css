@@ -1,0 +1,68 @@
+/* ---------------------------------------------------- */
+/* EMPTY STATE CONTAINER                                */
+/* ---------------------------------------------------- */
+.empty-state-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  background-color: #f9fafb; /* Very light gray background */
+  border-radius: 12px;
+  border: 1px dashed #d1d5db; /* Dashed border looks "waiting" */
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* ---------------------------------------------------- */
+/* ICON                                                 */
+/* ---------------------------------------------------- */
+.empty-icon {
+  font-size: 48px;
+  color: #9ca3af; /* Gray-400 (Subtle) */
+  margin-bottom: 16px;
+  background: white;
+  padding: 20px;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* ---------------------------------------------------- */
+/* TEXT                                                 */
+/* ---------------------------------------------------- */
+.empty-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #374151; /* Gray-700 */
+  margin: 0 0 8px 0;
+}
+
+.empty-description {
+  font-size: 15px;
+  color: #6b7280; /* Gray-500 */
+  margin: 0 0 24px 0;
+  max-width: 400px;
+  line-height: 1.5;
+}
+
+/* ---------------------------------------------------- */
+/* CTA BUTTON (Teal)                                    */
+/* ---------------------------------------------------- */
+.btn-empty-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background-color: #0d9488; /* Brand Teal */
+  color: white;
+  border-radius: 8px;
+  font-weight: 500;
+  text-decoration: none; /* For Link components */
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-empty-action:hover {
+  background-color: #0f766e; /* Darker Teal */
+}

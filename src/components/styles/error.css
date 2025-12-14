@@ -1,0 +1,69 @@
+/* ---------------------------------------------------- */
+/* ERROR CONTAINER                                      */
+/* ---------------------------------------------------- */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  width: 100%;
+  min-height: 250px;
+  text-align: center;
+  background-color: #fff;
+  border-radius: 12px;
+  /* Optional: Add a subtle border to frame it */
+  border: 1px dashed #e5e7eb; 
+}
+
+/* ---------------------------------------------------- */
+/* ICON                                                 */
+/* ---------------------------------------------------- */
+.error-icon {
+  font-size: 48px;
+  color: #ef4444; /* Red-500 */
+  margin-bottom: 16px;
+  opacity: 0.9;
+}
+
+/* ---------------------------------------------------- */
+/* TEXT CONTENT                                         */
+/* ---------------------------------------------------- */
+.error-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827; /* Gray-900 */
+  margin: 0 0 8px 0;
+}
+
+.error-message {
+  font-size: 15px;
+  color: #6b7280; /* Gray-500 */
+  margin: 0 0 24px 0;
+  max-width: 400px;
+  line-height: 1.5;
+}
+
+/* ---------------------------------------------------- */
+/* RETRY BUTTON                                         */
+/* ---------------------------------------------------- */
+.btn-retry {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  /* Outline Style Red */
+  background: white;
+  border: 1px solid #ef4444;
+  color: #ef4444;
+}
+
+.btn-retry:hover {
+  background: #fef2f2; /* Light Red Tint */
+}
