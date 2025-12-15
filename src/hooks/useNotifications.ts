@@ -32,7 +32,6 @@ export function useNotifications() {
 
     // Listen for incoming notifications
     connection.on("ReceiveNotification", (message: string) => {
-      console.log("--------notification----------", message);
       // Update the TanStack Query cache
       queryClient.setQueryData<string[]>(queryKey, (old = []) => [
         ...old,

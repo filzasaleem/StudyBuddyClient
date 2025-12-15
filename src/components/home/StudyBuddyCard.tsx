@@ -17,7 +17,6 @@ export default function StudyBuddyCard({ card }: { card: StudyBuddyT }) {
     "none"
   );
   const [buttonClass, setButtonClass] = useState("btn btn-default");
-  console.log("pending query------->>>>", pendingQuery.data);
   useEffect(() => {
     if (!user) return;
 

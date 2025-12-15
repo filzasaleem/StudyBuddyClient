@@ -1,7 +1,6 @@
 import StudyBuddyCard from "./components/home/StudyBuddyCard";
 
 export const API_BASE = import.meta.env.VITE_API_BASE_URL;
-console.log("in the config..............",API_BASE);
 export const APIENDPOINTS = {
   EVENTS: {
     GET: `${API_BASE}/events`,
