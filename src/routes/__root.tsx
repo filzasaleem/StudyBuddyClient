@@ -13,7 +13,7 @@ export const Route = createRootRoute({
         <UserSync />
       </SignedIn>
       <Outlet />
-      <TanStackRouterDevtools />
+      {/* <TanStackRouterDevtools /> */}
    
     </>
   ),
