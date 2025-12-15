@@ -30,6 +30,14 @@ export default function CalendarEventModal({ isOpen, onClose }: PropType) {
 
   const timeSlots = generateTimes();
 
+  const filteredEndTimes = timeSlots.filter((t) => {
+  if (!startTime) return true; // no filter if startTime not selected
+  const [startH, startM] = startTime.split(":").map(Number);
+  const [endH, endM] = t.split(":").map(Number);
+  return endH > startH || (endH === startH && endM > startM);
+});
+
+
   const handleCreate = async () => {
     const newErrors: { [key: string]: string } = {};
 
@@ -132,7 +140,7 @@ export default function CalendarEventModal({ isOpen, onClose }: PropType) {
               onChange={(e) => setEndTime(e.target.value)}
             >
               <option value="">Select time</option>
-              {timeSlots.map((t) => (
+              {filteredEndTimes.map((t) => (
                 <option key={t}>{t}</option>
               ))}
             </select>
