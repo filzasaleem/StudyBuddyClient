@@ -6,49 +6,54 @@ import { useConnections } from "@/hooks/useConnection";
 
 export default function StudyBuddyCard({ card }: { card: StudyBuddyT }) {
   const { user } = useUserSync();
-  const { pendingQuery, buddiesQuery, sendRequestMutation } = useConnections();
+  const {
+    pendingQuery,
+    buddiesQuery,
+    sendRequestMutation,
+    outgoingPendingQuery,
+  } = useConnections();
 
-  const [status, setStatus] = useState<"none" | "pending" | "connected">("none");
+  const [status, setStatus] = useState<"none" | "pending" | "connected">(
+    "none"
+  );
   const [buttonClass, setButtonClass] = useState("btn btn-default");
-
+  console.log("pending query------->>>>", pendingQuery.data);
   useEffect(() => {
     if (!user) return;
 
-  
-    const isBuddy = buddiesQuery.data?.some(
-      (b) => b.id === card.userId
-    );
+     if (buddiesQuery.data?.some(b => b.id === card.userId)) {
+    setStatus("connected");
+    setButtonClass("btn btn-outline-teal");
+    return;
+  }
 
-    if (isBuddy) {
-      setStatus("connected");
-      setButtonClass("btn btn-outline-teal"); //make a new one
-      return;
-    }
+    // const isPending = pendingQuery.data?.some(
+    //   (req) => req.receiverId === card.userId
+    // );
 
+     if (outgoingPendingQuery.data?.some(req => req.receiverId === card.userId)) {
+    setStatus("pending");
+    setButtonClass("btn btn-secondary");
+    return;
+  }
 
-    const isPending = pendingQuery.data?.some(
-      (req) => req.receiverId === card.userId
-    );
-
-    if (isPending) {
-      setStatus("pending");
-      setButtonClass("btn btn-secondary"); // GRAY
-      return;
-    }
 
     setStatus("none");
     setButtonClass("btn btn-default");
-
-  }, [user, card.userId, pendingQuery.data, buddiesQuery.data]);
+  }, [user, card.userId, pendingQuery.data, buddiesQuery.data,outgoingPendingQuery.data]);
 
   const handleConnect = () => {
     if (!user) return;
 
+    setStatus("pending");
     sendRequestMutation.mutate({
       senderId: user.id,
       receiverId: card.userId,
     });
   };
+
+
+  
 
   return (
     <div className="studdybuddy-card">
@@ -72,8 +77,8 @@ export default function StudyBuddyCard({ card }: { card: StudyBuddyT }) {
           {status === "none"
             ? "Connect"
             : status === "pending"
-            ? "Request Sent"
-            : "Connected"}
+              ? "Request Sent"
+              : "Connected"}
         </span>
       </button>
     </div>

@@ -1,7 +1,7 @@
 import StudyBuddyCard from "./components/home/StudyBuddyCard";
 
 export const API_BASE = import.meta.env.VITE_API_BASE_URL;
-
+console.log("in the config..............",API_BASE);
 export const APIENDPOINTS = {
   EVENTS: {
     GET: `${API_BASE}/events`,
@@ -21,8 +21,10 @@ export const APIENDPOINTS = {
     SEND_REQUEST: `${API_BASE}/connections`,
     SEND_RESPONSE: (id: string) => `${API_BASE}/connections/${id}/respond`,
     GET_PENDING_REQUESTS: (currentUserId: string) => `${API_BASE}/connections/pending/${currentUserId}`,
+    GET_SENT_PENDING_REQUESTS: (userId: string) => `${API_BASE}/connections/pending/sent/${userId}`,
     NOTIFICATION:(currentUserId:string) =>  `${API_BASE}/connections/notifications/${currentUserId}`,
     BUDDIES:(currentUserId:string) =>  `${API_BASE}/connections/buddies/${currentUserId}`,
+
     GET_ACCEPTED:""
 
   },

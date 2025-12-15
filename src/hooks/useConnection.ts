@@ -48,6 +48,26 @@ export function useConnections() {
     },
     refetchInterval: 5000,
   });
+ // --------------------------
+  // PENDING REQUESTS SENT (Polling)
+  // --------------------------
+
+  const outgoingPendingQuery = useQuery({
+  queryKey: ["outgoing-pending", ],
+   queryFn: async () => {
+      const token = await getToken();
+      const url = APIENDPOINTS.CONNECTION.GET_SENT_PENDING_REQUESTS(currentUserId!);
+      const res = await fetch(url, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!res.ok) throw new Error("Failed to fetch pending requests");
+      return res.json();
+    },
+    refetchInterval: 5000,
+  });
 
   // --------------------------
   // Buddies
@@ -151,5 +171,6 @@ export function useConnections() {
     sendRequestMutation,
     respondMutation,
     buddiesQuery,
+    outgoingPendingQuery,
   };
 }

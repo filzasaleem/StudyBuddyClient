@@ -23,6 +23,7 @@ export function useUserSync() {
     queryKey: ["user", "profile"],
     queryFn: async () => {
       const token = await getToken();
+      console.log("token",token);
       if (!token) throw new Error("Missing token");
 
       const res = await fetch(APIENDPOINTS.USER.GET, {
