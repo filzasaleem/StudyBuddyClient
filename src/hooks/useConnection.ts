@@ -24,7 +24,7 @@ export interface Buddy {
 
 export function useConnections() {
   const { user } = useUserSync();
-  const currentUserId = user?.id;
+  const currentUserId = user?.id; 
   const queryClient = useQueryClient();
   const { getToken } = useAuth();
 
@@ -33,7 +33,7 @@ export function useConnections() {
   // --------------------------
   const pendingQuery = useQuery<Connection[]>({
     queryKey: ["connections", "pending", currentUserId],
-    enabled: !!currentUserId, // ⛔ BLOCK until user exists
+    enabled: !!currentUserId, 
     queryFn: async () => {
       const token = await getToken();
       const url = APIENDPOINTS.CONNECTION.GET_PENDING_REQUESTS(currentUserId!);
@@ -48,15 +48,17 @@ export function useConnections() {
     },
     refetchInterval: 5000,
   });
- // --------------------------
+
+  // --------------------------
   // PENDING REQUESTS SENT (Polling)
   // --------------------------
-
   const outgoingPendingQuery = useQuery({
-  queryKey: ["outgoing-pending", ],
-   queryFn: async () => {
+    queryKey: ["outgoing-pending", currentUserId], // Include userId in the queryKey
+    enabled: !!currentUserId, 
+    queryFn: async () => {
       const token = await getToken();
-      const url = APIENDPOINTS.CONNECTION.GET_SENT_PENDING_REQUESTS(currentUserId!);
+      if (!currentUserId) throw new Error("User ID is not available");
+      const url = APIENDPOINTS.CONNECTION.GET_SENT_PENDING_REQUESTS(currentUserId);
       const res = await fetch(url, {
         headers: {
           "Content-Type": "application/json",
@@ -72,8 +74,9 @@ export function useConnections() {
   // --------------------------
   // Buddies
   // --------------------------
-  const buddiesQuery = useQuery<BuddyDto[]>({
-    queryKey: ["buddies"],
+  const buddiesQuery = useQuery<Buddy[]>({
+    queryKey: ["buddies", currentUserId],
+    enabled: !!currentUserId, // Only fetch if user exists
     queryFn: async () => {
       const token = await getToken();
       const res = await fetch(APIENDPOINTS.CONNECTION.BUDDIES(currentUserId!), {
@@ -84,7 +87,6 @@ export function useConnections() {
       if (!res.ok) throw new Error("Failed to fetch buddies");
       return res.json();
     },
-    enabled: !!currentUserId,
   });
 
   // --------------------------
@@ -94,7 +96,7 @@ export function useConnections() {
     { id: string; message: string; connectionId: string }[]
   >({
     queryKey: ["notifications", currentUserId],
-    enabled: !!currentUserId, // ⛔ BLOCK until user exists
+    enabled: !!currentUserId, // Only fetch if user exists
     queryFn: async () => {
       const token = await getToken();
       const url = APIENDPOINTS.CONNECTION.NOTIFICATION(currentUserId!);
