@@ -25,7 +25,6 @@ export default function StudyBuddyCard({ card }: { card: StudyBuddyT }) {
     setButtonClass("btn btn-outline-teal");
     return;
   }
-
     // const isPending = pendingQuery.data?.some(
     //   (req) => req.receiverId === card.userId
     // );
